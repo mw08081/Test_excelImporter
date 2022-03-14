@@ -21,6 +21,15 @@ public class SystemManager : MonoBehaviour
             return skiilDataDb;
         }
     }
+    [SerializeField] SpellManager spellManager;
+    public SpellManager SpellManager
+    {
+        get
+        {
+            return spellManager;
+        }
+    }
+
 
     void Start()
     {
