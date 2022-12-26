@@ -1,3 +1,65 @@
+## 스크립터블 오브젝트
+```C#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public struct S_SkillData
+{
+    public string Id { get; private set; }                 //?? ID
+    public bool IsActive { get; private set; }             //??? ??? ?? 
+    public bool IsNonTargeting { get; private set; }       //??? ?? 
+    public int ElecConsume { get; private set; }           //?? ??? 
+    public int ElecTransfer { get; private set; }          //?? ?? ?? 
+    public float CoolTime { get; private set; }            //?? ???
+    public string RangeId { get; private set; }            //?? ??? ??? ?? ID
+    public string EffectId { get; private set; }           //?? ??? ??? ?? ID
+    public string UseAnimationId { get; private set; }     //?? ????? ??? ?? ID
+    public string NameStringId { get; private set; }       //?? ?? ??? ?? ID
+    public int SkillRange { get; private set; }    //?? ?? ??? ?? ID
+    public int[] SkillValues { get; private set; }
+
+
+    public S_SkillData(string id, bool isActive, bool isNonTargeting, int elecConsume, int elecTransfer, float coolTime, string rangeId, string effectId, string useAnimationId, string nameStringId, int skillRange, int[] _skillValues)
+    {
+        Id = id;
+        IsActive = isActive;
+        IsNonTargeting = isNonTargeting;
+        ElecConsume = elecConsume;
+        ElecTransfer = elecTransfer;
+        CoolTime = coolTime;
+        RangeId = rangeId;
+        EffectId = effectId;
+        UseAnimationId = useAnimationId;
+        NameStringId = nameStringId;
+        SkillRange = skillRange;
+        SkillValues = _skillValues;
+    }
+}
+
+[CreateAssetMenu(fileName = "new Data_T_Table", menuName = "Data Table/Skill")]
+public class Data_Skill_Table : ScriptableObject
+{
+    //?? ?? - ???? ID
+    public Dictionary<string, S_SkillData> SkillDatas = new Dictionary<string, S_SkillData>();
+
+    public void AddSKillDatas(S_SkillData skillData)
+    {
+        try
+        {
+            SkillDatas.Add(skillData.Id, skillData);
+        }
+        catch(System.Exception e)
+        {
+#if DEV
+            //Debug.LogWarning(e.Message);
+#endif
+        }
+    }
+}
+
+```
+
 ## Excel Importer (for mp)
 
 ### How to test 
@@ -15,6 +77,7 @@ build 후 space를 누르면 tmp에 b2셀의 데이터가 나타난다(전체 �
 
 재빌드를 하지 않아도 B2셀의 값을 변경 후, exe파일을 실행한다면 flash의 coolDown이 변경된 것을 확인할 수 있다
 
+1. 구글시트 추출
 ```C#
 #region DEV - GOOGLE EXCEL SHEET
     private const string DATA_SKILL_TABLE_URL = "https://docs.google.com/spreadsheets/d/1keaLZLRqs5bVp5iWA9jOapqTmcmiQJ3kY6ZlW5jl_UA/export?format=tsv&range=D2:O";
